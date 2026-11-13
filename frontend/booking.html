@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BusGo | Book Your Seat</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f6fc;
+            color: #17233c;
+        }
+
+        nav {
+            background: #101d38;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #60a5fa;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .page-heading h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-heading p {
+            color: #64748b;
+        }
+
+        .booking-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.8fr) minmax(260px, 0.8fr);
+            gap: 25px;
+            align-items: start;
+        }
+
+        .card {
+            background: white;
+            border-radius: 17px;
+            padding: 28px;
+            box-shadow: 0 8px 30px rgba(15, 35, 70, 0.06);
+            border: 1px solid #e5eaf2;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 21px;
+            margin-bottom: 20px;
+        }
+
+        .trip-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .detail-item span {
+            display: block;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 7px;
+        }
+
+        .detail-item strong {
+            font-size: 16px;
+            overflow-wrap: anywhere;
+        }
+
+        .seat-layout {
+            background: #f7f9fd;
+            border: 1px solid #e5eaf2;
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .driver {
+            text-align: right;
+            color: #64748b;
+            font-size: 13px;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #cbd5e1;
+        }
+
+        .seat-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(35px, 1fr));
+            gap: 12px;
+        }
+
+        .seat {
+            min-height: 48px;
+            border: 1px solid #86efac;
+            border-radius: 11px;
+            background: #e8f8ef;
+            color: #07834b;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .seat:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .seat.selected {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+            box-shadow: 0 0 0 5px #dbeafe;
+        }
+
+        .seat.booked {
+            background: #fee2e2;
+            border-color: #fecaca;
+            color: #b91c1c;
+            cursor: not-allowed;
+        }
+
+        .seat:disabled {
+            opacity: 1;
+        }
+
+        .seat-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-top: 22px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .legend-box {
+            width: 15px;
+            height: 15px;
+            border-radius: 4px;
+        }
+
+        .available-box { background: #e8f8ef; border: 1px solid #86efac; }
+        .selected-box { background: #2563eb; }
+        .booked-box { background: #fee2e2; border: 1px solid #fecaca; }
+
+        .selected-info {
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 16px;
+            border-radius: 10px;
+            margin-top: 22px;
+            font-weight: 600;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5eaf2;
+            font-size: 14px;
+        }
+
+        .summary-row span {
+            color: #64748b;
+        }
+
+        .summary-row strong {
+            text-align: right;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 22px;
+        }
+
+        .confirm-btn:hover:not(:disabled) {
+            background: #1d4ed8;
+        }
+
+        .confirm-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            padding: 14px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+            overflow-wrap: anywhere;
+        }
+
+        .message.success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .message.error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .message.info {
+            display: block;
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+        }
+
+        footer {
+            margin-top: 70px;
+            background: #0b1730;
+            padding: 30px;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        @media(max-width: 800px) {
+            .booking-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 500px) {
+            .card {
+                padding: 18px;
+            }
+
+            .trip-details {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .seat-layout {
+                padding: 15px;
+            }
+
+            .seat-grid {
+                gap: 8px;
+            }
+
+            .seat {
+                min-height: 42px;
+                font-size: 13px;
+            }
+
+            .page-heading h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">BusGo</div>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="my-bookings.html">My Bookings</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <div class="page-heading">
+            <h1>Book Your Seat</h1>
+            <p>Select your preferred seat and confirm your reservation.</p>
+        </div>
+
+        <div id="message" class="message" role="alert"></div>
+
+        <div class="booking-layout">
+
+            <div>
+
+                <section class="card">
+                    <h2>Trip Details</h2>
+
+                    <div id="tripDetails">
+                        <div class="loading">Loading trip details...</div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h2>Select Your Seat</h2>
+
+                    <div class="seat-layout">
+                        <div class="driver">Driver / Front</div>
+
+                        <div id="seatGrid" class="seat-grid">
+                            <div class="loading">Loading seats...</div>
+                        </div>
+
+                        <div class="seat-legend">
+                            <div class="legend-item">
+                                <div class="legend-box available-box"></div>
+                                Available
+                            </div>
+
+                            <div class="legend-item">
+                                <div class="legend-box selected-box"></div>
+                                Selected
+                            </div>
+
+                            <div class="legend-item">
+                                <div class="legend-box booked-box"></div>
+                                Booked
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="selectedSeat" class="selected-info">
+                        Please select a seat.
+                    </div>
+
+                </section>
+
+            </div>
+
+            <aside class="card">
+                <h2>Booking Summary</h2>
+
+                <div class="summary-row">
+                    <span>Platform</span>
+                    <strong>BusGo</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Selected Seat</span>
+                    <strong id="summarySeat">Choose a seat</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Fare</span>
+                    <strong id="summaryFare">—</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Reservation</span>
+                    <strong>Online</strong>
+                </div>
+
+                <button id="confirmBooking" class="confirm-btn"
+                    type="button" disabled>
+                    Confirm Booking →
+                </button>
+
+                <p style="font-size:13px;color:#64748b;line-height:1.7;margin-top:18px;">
+                    Please verify your trip and seat selection before
+                    confirming your booking.
+                </p>
+            </aside>
+
+        </div>
+
+    </main>
+
+    <footer>BusGo</footer>
+
+    <script src="js/booking.js"></script>
+
+</body>
+</html>

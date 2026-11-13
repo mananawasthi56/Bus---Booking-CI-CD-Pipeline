@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BusGo | Book Your Journey</title>
+    <meta name="description" content="Book comfortable bus journeys with BusGo. Search routes, select seats and manage your bookings easily.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <h2>Bus<span>Go</span></h2>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#why-busgo">About</a>
+            <a href="login.html" id="loginLink">Login</a>
+            <a href="register.html" id="registerLink">Register</a>
+            <a href="my-bookings.html" id="bookingLink" hidden>My Bookings</a>
+            <span id="userName"></span>
+            <button id="logoutBtn" hidden>Logout</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+
+            <span style="color:#bfdbfe;font-weight:700;letter-spacing:2px;font-size:13px;">
+                YOUR JOURNEY STARTS HERE
+            </span>
+
+            <h1>
+                Travel Anywhere,<br>
+                <span style="color:#93c5fd;">Anytime.</span>
+            </h1>
+
+            <p>
+                Discover new destinations, book your seats and enjoy
+                a comfortable journey with BusGo.
+            </p>
+
+            <div style="display:flex;gap:15px;flex-wrap:wrap;margin-top:28px;">
+                <a href="#search" class="btn-primary"
+                   style="background:white;color:#1746b0;">
+                    Explore Buses →
+                </a>
+
+                <a href="#why-busgo"
+                   style="color:white;font-weight:700;padding:12px 5px;">
+                    Why BusGo?
+                </a>
+            </div>
+
+            <div style="display:flex;gap:35px;flex-wrap:wrap;margin-top:45px;color:white;">
+                <div>
+                    <strong style="font-size:22px;">Easy</strong>
+                    <p style="font-size:13px;color:#bfdbfe;">Online Booking</p>
+                </div>
+
+                <div>
+                    <strong style="font-size:22px;">Secure</strong>
+                    <p style="font-size:13px;color:#bfdbfe;">Seat Reservations</p>
+                </div>
+
+                <div>
+                    <strong style="font-size:22px;">Fast</strong>
+                    <p style="font-size:13px;color:#bfdbfe;">Trip Search</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="search-section" id="search">
+        <div class="search-card">
+
+            <h2>Find Your Bus</h2>
+
+            <p style="color:#718096;margin-bottom:25px;">
+                Where would you like to travel today?
+            </p>
+
+            <form id="searchForm">
+
+                <div class="form-group">
+                    <label for="source">FROM</label>
+                    <input
+                        type="text"
+                        id="source"
+                        placeholder="Enter starting city"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="destination">TO</label>
+                    <input
+                        type="text"
+                        id="destination"
+                        placeholder="Enter destination city"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="travelDate">JOURNEY DATE</label>
+                    <input
+                        type="date"
+                        id="travelDate"
+                    >
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Search Buses →
+                </button>
+
+            </form>
+        </div>
+    </section>
+
+    <!-- SEARCH RESULTS -->
+    <section class="results-section">
+        <h2>Available Buses</h2>
+        <p id="searchMessage">
+            Search for buses to discover available trips.
+        </p>
+
+        <div id="tripResults" class="trip-results"></div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="why-busgo"
+        style="padding:65px 7%;background:white;">
+
+        <div style="max-width:1150px;margin:auto;">
+
+            <div style="text-align:center;margin-bottom:40px;">
+                <span style="color:#2563eb;font-weight:700;font-size:13px;letter-spacing:2px;">
+                    WHY CHOOSE BUSGO
+                </span>
+
+                <h2 style="font-size:34px;margin-top:10px;font-family:Outfit,sans-serif;">
+                    Travel made simple.
+                </h2>
+
+                <p style="color:#718096;margin-top:10px;">
+                    Everything you need for a smoother booking experience.
+                </p>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-card">
+                    <div style="font-size:30px;">🚌</div>
+                    <h3 style="margin-top:12px;color:#172033;">Easy Bus Search</h3>
+                    <p style="font-size:14px;font-weight:400;color:#718096;">
+                        Find available trips using your source, destination and journey date.
+                    </p>
+                </div>
+
+                <div class="dashboard-card">
+                    <div style="font-size:30px;">💺</div>
+                    <h3 style="margin-top:12px;color:#172033;">Seat Selection</h3>
+                    <p style="font-size:14px;font-weight:400;color:#718096;">
+                        View seat availability and select your preferred seat.
+                    </p>
+                </div>
+
+                <div class="dashboard-card">
+                    <div style="font-size:30px;">🔒</div>
+                    <h3 style="margin-top:12px;color:#172033;">Secure Booking</h3>
+                    <p style="font-size:14px;font-weight:400;color:#718096;">
+                        Manage your reservations through your account.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section style="padding:65px 7%;background:#f5f7fc;">
+        <div style="max-width:1150px;margin:auto;text-align:center;">
+
+            <span style="color:#2563eb;font-weight:700;font-size:13px;letter-spacing:2px;">
+                SIMPLE PROCESS
+            </span>
+
+            <h2 style="font-family:Outfit,sans-serif;font-size:34px;margin:10px 0 35px;">
+                Book your trip in 3 steps
+            </h2>
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-card">
+                    <h2 style="color:#2563eb;">01</h2>
+                    <h3 style="margin-top:12px;color:#172033;">Search</h3>
+                    <p style="font-size:14px;font-weight:400;color:#718096;">
+                        Enter your route and journey date.
+                    </p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h2 style="color:#2563eb;">02</h2>
+                    <h3 style="margin-top:12px;color:#172033;">Choose</h3>
+                    <p style="font-size:14px;font-weight:400;color:#718096;">
+                        Select your preferred trip and available seat.
+                    </p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h2 style="color:#2563eb;">03</h2>
+                    <h3 style="margin-top:12px;color:#172033;">Confirm</h3>
+                    <p style="font-size:14px;font-weight:400;color:#718096;">
+                        Confirm your booking and manage it online.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <h2 style="font-family:Outfit,sans-serif;color:white;margin-bottom:10px;">
+            Bus<span style="color:#60a5fa;">Go</span>
+        </h2>
+
+        <p>Your journey, our responsibility.</p>
+
+        <div style="margin:20px 0;display:flex;justify-content:center;gap:22px;flex-wrap:wrap;">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            <a href="my-bookings.html">My Bookings</a>
+        </div>
+
+        <p>© 2026 BusGo. All rights reserved.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/index.js"></script>
+
+</body>
+</html>
