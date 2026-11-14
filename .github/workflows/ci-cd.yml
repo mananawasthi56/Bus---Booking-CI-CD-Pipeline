@@ -3,14 +3,34 @@ name: BusGo CI/CD Pipeline
 
 on:
   push:
-    branches: [ "master", "main" ]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [ "master", "main" ]
+    branches: [ "main", "master" ]
 
 jobs:
   test:
     name: Test Application
     runs-on: ubuntu-latest
+
+    env:
+      APP_NAME: Bus Booking Platform
+      DATABASE_URL: postgresql://busgo:busgo_password@localhost:5432/busbooking
+      SECRET_KEY: github-actions-test-secret
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: busgo
+          POSTGRES_PASSWORD: busgo_password
+          POSTGRES_DB: busbooking
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U busgo -d busbooking"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout Code
@@ -27,8 +47,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Tests
-        run: |
-          pytest -v
+        run: pytest -v
 
   docker-build:
     name: Build Docker Image
@@ -40,5 +59,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker Image
-        run: |
-          docker build -t busgo-backend:latest .
+        run: docker build -t busgo-backend:latest .
