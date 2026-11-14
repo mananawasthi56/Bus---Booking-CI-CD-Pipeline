@@ -17,7 +17,9 @@ services:
       retries: 5
 
   backend:
-    build: .
+    image: mananawasthi/busgo-backend:${IMAGE_TAG:-latest}
+    build:
+      context: .
     container_name: busgo-backend
     restart: unless-stopped
     ports:
@@ -25,10 +27,20 @@ services:
     environment:
       APP_NAME: Bus Booking Platform
       DATABASE_URL: postgresql://busgo:busgo_password@db:5432/busbooking
-      SECRET_KEY: change-this-to-a-long-random-secret
+      SECRET_KEY: ${SECRET_KEY}
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
 volumes:
   postgres_data:
